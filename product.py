@@ -1,8 +1,8 @@
 import os # operating system
 
+# read files
 products = []
-
-if os.path.isfile('product.csv'):
+if os.path.isfile('product.csv'): # check files
     print('yes, find it')
     with open('product.csv', 'r') as f:
 	    for line in f:
