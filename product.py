@@ -1,13 +1,18 @@
-# reading files
+import os # operating system
 
 products = []
-with open('product.csv', 'r') as f:
-	for line in f:
-		if 'product,price' in line:
-			continue
-		name, price = line.strip().split(',')
-		products.append([name,price])
-print(products)
+
+if os.path.isfile('product.csv'):
+    print('yes, find it')
+    with open('product.csv', 'r') as f:
+	    for line in f:
+		    if 'product,price' in line:
+			    continue
+		    name, price = line.strip().split(',')
+		    products.append([name, price])
+    print(products)  
+else:
+	print('no, cannot find it')
 
 # user's input
 while True:
