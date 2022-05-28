@@ -1,45 +1,53 @@
 import os # operating system
 
-# read files
-products = []
-if os.path.isfile('product.csv'): # check files
-    print('yes, find it')
-    with open('product.csv', 'r') as f:
-	    for line in f:
-		    if 'product,price' in line:
-			    continue
-		    name, price = line.strip().split(',')
-		    products.append([name, price])
-    print(products)  
-else:
-	print('no, cannot find it')
+def read_files(filename):
+	products = []
+	with open(filename, 'r') as f:
+		for line in f:
+			if 'product,price' in line:
+				continue
+			name, price = line.strip().split(',')
+			products.append([name, price])
+	return products
 
 # user's input
-while True:
-	name = input('enter your product name: ')
-	if name == 'q':
-		break
-	price = input('enter your product price: ')
-	p = []
-	p.append(name)
-	p.append(price)   
-	# 7.8.9 could be:  p = [name, price]  
-	products.append(p)
-	# 7.8.9.11 could be: products.append([name, price])
-print(products)
+def user_input(products):
+	while True:
+		name = input('enter your product name: ')
+		if name == 'q':
+			break
+		price = input('enter your product price: ')
+		p = []
+		p.append(name)
+		p.append(price)   
+		# 7.8.9 could be:  p = [name, price]  
+		products.append(p)
+		# 7.8.9.11 could be: products.append([name, price])
+	print(products)
+	return products
 
-# print all purchase record
-for product in products:
-	print('the', product[0], 'price is: ', product[1])
+# print all purchase records
+def print_products(products):
+	for product in products:
+		print('the', product[0], 'price is: ', product[1])
 
 # write into the file
-with open('product.csv', 'w', encoding = 'utf-8') as f:
-	f.write('product,price\n')
-	for product in products:
-		f.write(product[0] + ',' + str(product[1]) + '\n')
+def write_file(filename, products):
+	with open(filename, 'w', encoding = 'utf-8') as f:
+		f.write('product,price\n')
+		for product in products:
+			f.write(product[0] + ',' + str(product[1]) + '\n')
 
-# practice
-data = [1, 3, 5, 7, 9] # 清單中裝著一些整數
-with open('test.txt', 'w') as f:
-    for g in data:
-        f.write(str(g) + '\n')
+def main():
+	filename = 'products.csv'
+	if os.path.isfile(filename): # check files
+		print('yes, find it')
+		products = read_files(filename)
+	else:
+		print('no, cannot find it')
+
+	products = user_input(products)
+	print_products(products)
+	write_file('products.csv', products)
+
+main()
